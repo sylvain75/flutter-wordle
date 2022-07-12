@@ -42,8 +42,8 @@ class _KeyboardDemoState extends State<KeyboardDemo> {
           ),
           Spacer(),
           CustomKeyboard(
-            onTextInput: (myText) {
-              _insertText(myText);
+            onTextInput: (x) {
+              _insertText(x);
             },
             onBackspace: () {
               _backspace();
@@ -147,70 +147,43 @@ class CustomKeyboard extends StatelessWidget {
           buildRowOne(),
           buildRowTwo(),
           buildRowThree(),
+          buildRowFour(),
         ],
       ),
     );
   }
 
   Expanded buildRowOne() {
+    var list = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
     return Expanded(
       child: Row(
-        children: [
-          TextKey(
-            text: '1',
-            onTextInput: _textInputHandler,
-          ),
-          TextKey(
-            text: '2',
-            onTextInput: _textInputHandler,
-          ),
-          TextKey(
-            text: '3',
-            onTextInput: _textInputHandler,
-          ),
-          TextKey(
-            text: '4',
-            onTextInput: _textInputHandler,
-          ),
-          TextKey(
-            text: '5',
-            onTextInput: _textInputHandler,
-          ),
-        ],
+        children: [for(var item in list )  TextKey(text: item, onTextInput: _textInputHandler)],
       ),
-    );
-  }
+    );  }
 
   Expanded buildRowTwo() {
+    // final children = <Widget>[];
+    // for (var i = 0; i < 10; i++) {
+    //   children.add(new ListTile());
+    // }
+    var list = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'k', 'k', 'l'];
     return Expanded(
       child: Row(
-        children: [
-          TextKey(
-            text: 'a',
-            onTextInput: _textInputHandler,
-          ),
-          TextKey(
-            text: 'b',
-            onTextInput: _textInputHandler,
-          ),
-          TextKey(
-            text: 'c',
-            onTextInput: _textInputHandler,
-          ),
-          TextKey(
-            text: 'd',
-            onTextInput: _textInputHandler,
-          ),
-          TextKey(
-            text: 'e',
-            onTextInput: _textInputHandler,
-          ),
-        ],
+        children: [for(var item in list )  TextKey(text: item, onTextInput: _textInputHandler)],
       ),
     );
   }
 
   Expanded buildRowThree() {
+    var list = ['z', 'x', 'c', 'v', 'b', 'b', 'n', 'm'];
+    return Expanded(
+      child: Row(
+        children: [for(var item in list )  TextKey(text: item, onTextInput: _textInputHandler)],
+      ),
+    );
+  }
+
+  Expanded buildRowFour() {
     return Expanded(
       child: Row(
         children: [
