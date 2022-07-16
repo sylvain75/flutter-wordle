@@ -1,3 +1,4 @@
+import 'package:flurddle/components/letter_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flurddle/components/working_text_key.dart';
 import 'package:flurddle/components/keyboard.dart';
@@ -38,15 +39,42 @@ class _KeyboardDemoState extends State<KeyboardDemo> {
               });
             },
           ),
-          Spacer(),
-          CustomKeyboard(
-            onTextInput: (x) {
-              _insertText(x);
-            },
-            onBackspace: () {
-              _backspace();
-            },
-          ),
+          // Spacer(),
+          Container(
+            child:
+              Column(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    LetterBox(textValue: 'm'),
+                    LetterBox(textValue: 'o'),
+                    LetterBox(textValue: 't'),
+                    LetterBox(textValue: 'u'),
+                    LetterBox(textValue: 's'),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,),
+                Row(
+                  children: [
+                    LetterBox(textValue: 's'),
+                    LetterBox(textValue: 'u'),
+                    LetterBox(textValue: 't'),
+                    LetterBox(textValue: 'o'),
+                    LetterBox(textValue: 'm'),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,),
+              ],
+          ))
+
+          // CustomKeyboard(
+          //   onTextInput: (x) {
+          //     _insertText(x);
+          //   },
+          //   onBackspace: () {
+          //     _backspace();
+          //   },
+          // ),
         ],
       ),
     );
