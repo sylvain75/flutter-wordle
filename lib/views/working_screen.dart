@@ -1,7 +1,5 @@
 import 'package:flurddle/components/letter_box.dart';
 import 'package:flutter/material.dart';
-import 'package:flurddle/components/working_text_key.dart';
-import 'package:flurddle/components/keyboard.dart';
 
 class KeyboardDemo extends StatefulWidget {
   @override
@@ -11,6 +9,8 @@ class KeyboardDemo extends StatefulWidget {
 class _KeyboardDemoState extends State<KeyboardDemo> {
   TextEditingController _controller = TextEditingController();
   bool _readOnly = true;
+  static int numberOfLetters = 5;
+  var listBoxes = List<int>.generate(numberOfLetters, (i) => i + 1);
 
   @override
   Widget build(BuildContext context) {
@@ -41,31 +41,48 @@ class _KeyboardDemoState extends State<KeyboardDemo> {
           ),
           // Spacer(),
           Container(
-            child:
-              Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    LetterBox(textValue: 'm'),
-                    LetterBox(textValue: 'o'),
-                    LetterBox(textValue: 't'),
-                    LetterBox(textValue: 'u'),
-                    LetterBox(textValue: 's'),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,),
-                Row(
-                  children: [
-                    LetterBox(textValue: 's'),
-                    LetterBox(textValue: 'u'),
-                    LetterBox(textValue: 't'),
-                    LetterBox(textValue: 'o'),
-                    LetterBox(textValue: 'm'),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,),
-              ],
-          ))
+              child: Column(
+                  children:
+                      // list.map((item) => LetterBox(textValue: 'c')).toList(),
+                      // LetterBox(textValue: 'v')
+
+                      listBoxes
+                          .asMap()
+                          .entries
+                          .map((columnItem) => Row(
+                              children: listBoxes
+                                  .asMap()
+                                  .entries
+                                  .map((rowItem) => LetterBox(
+                                      textValue: rowItem.key.toString()))
+                                  .toList(),
+                              mainAxisAlignment: MainAxisAlignment.center))
+                          .toList()
+
+                  /*
+                        Coordinates will be row : column
+                        - Track where the typing should be
+                        - Guesses kept in the cookies on enter key after filling row
+                          - Guesses should have an ID plus list of guesses
+                          - Guesses ID is the the word ID of the day
+                      */
+
+                  // Row(
+                  //   children: [
+                  //     for( var j = 0 ; j < numberOfLetters; j++ )
+                  //       LetterBox(textValue: 'c')
+                  //   ],
+                  //   mainAxisAlignment: MainAxisAlignment.center,),
+                  //   children: [
+                  //   for( var i = 0 ; i < numberOfLetters; i++ )
+                  //     Row(
+                  //     children: [
+                  //       for( var j = 0 ; j < numberOfLetters; j++ )
+                  //         LetterBox(textValue: 'c')
+                  //     ],
+                  //     mainAxisAlignment: MainAxisAlignment.center,),
+                  // ],
+                  ))
 
           // CustomKeyboard(
           //   onTextInput: (x) {
