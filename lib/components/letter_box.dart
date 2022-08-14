@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class LetterBox extends StatelessWidget {
   const LetterBox({
     Key? key,
+    required this.handleOnTap,
     this.textValue = ' ',
     this.hasBorderRight = true,
     this.hasBorderLeft = true,
@@ -10,6 +11,7 @@ class LetterBox extends StatelessWidget {
     this.hasBorderBottom = true,
   }) : super(key: key);
 
+  final void Function(String) handleOnTap;
   final String textValue;
   static const bool isValid = false;
   static const bool hasWrongPosition = false;
@@ -45,14 +47,13 @@ class LetterBox extends StatelessWidget {
           ),
           // borderRadius: BorderRadius.circular(12),
         ),
-        child:
-            // padding: EdgeInsets.all(8.0),
-            Align(
-          alignment: Alignment.topCenter,
+        child: Center(
+            child: GestureDetector(
+          onTap: () => handleOnTap(this.textValue),
           child: Text(
             this.textValue,
             style: TextStyle(color: Colors.black, fontSize: 22.0),
           ),
-        ));
+        )));
   }
 }

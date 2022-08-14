@@ -1,6 +1,8 @@
 import 'package:flurddle/components/letter_box.dart';
 import 'package:flutter/material.dart';
 
+import '../components/keyboard.dart';
+
 class KeyboardDemo extends StatefulWidget {
   @override
   _KeyboardDemoState createState() => _KeyboardDemoState();
@@ -14,23 +16,43 @@ class _KeyboardDemoState extends State<KeyboardDemo> {
 
   @override
   Widget build(BuildContext context) {
+    List<Row> list = listBoxes
+        .asMap()
+        .entries
+        .map((rowItem) => Row(
+            children: listBoxes
+                .asMap()
+                .entries
+                .map((columnItem) => LetterBox(
+                    key: ObjectKey(
+                        '${columnItem.key.toString()}:${rowItem.key.toString()}'),
+                    // '${columnItem.key.toString()}:${rowItem.key.toString()}',
+                    textValue:
+                        '${columnItem.key.toString()}:${rowItem.key.toString()}',
+                    handleOnTap: (text) => print(ObjectKey(
+                            '${columnItem.key.toString()}:${rowItem.key.toString()}')
+                        .value)))
+                .toList(),
+            mainAxisAlignment: MainAxisAlignment.center))
+        .toList();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           SizedBox(height: 50),
-          TextField(
-            controller: _controller,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(3),
-              ),
-            ),
-            style: TextStyle(fontSize: 24),
-            autofocus: true,
-            showCursor: true,
-            readOnly: _readOnly,
-          ),
+          // TextField(
+          //   controller: _controller,
+          //   decoration: InputDecoration(
+          //     border: OutlineInputBorder(
+          //       borderRadius: BorderRadius.circular(3),
+          //     ),
+          //   ),
+          //   style: TextStyle(fontSize: 24),
+          //   autofocus: true,
+          //   showCursor: true,
+          //   readOnly: _readOnly,
+          // ),
           IconButton(
             icon: Icon(Icons.keyboard),
             onPressed: () {
@@ -41,57 +63,28 @@ class _KeyboardDemoState extends State<KeyboardDemo> {
           ),
           // Spacer(),
           Container(
-              child: Column(
-                  children:
-                      // list.map((item) => LetterBox(textValue: 'c')).toList(),
-                      // LetterBox(textValue: 'v')
-
-                      listBoxes
-                          .asMap()
-                          .entries
-                          .map((columnItem) => Row(
-                              children: listBoxes
-                                  .asMap()
-                                  .entries
-                                  .map((rowItem) => LetterBox(
-                                      textValue: rowItem.key.toString()))
-                                  .toList(),
-                              mainAxisAlignment: MainAxisAlignment.center))
-                          .toList()
+              child: Column(children: list
 
                   /*
+                      String key = values.keys.elementAt(index);
                         Coordinates will be row : column
                         - Track where the typing should be
                         - Guesses kept in the cookies on enter key after filling row
                           - Guesses should have an ID plus list of guesses
                           - Guesses ID is the the word ID of the day
-                      */
-
-                  // Row(
-                  //   children: [
-                  //     for( var j = 0 ; j < numberOfLetters; j++ )
-                  //       LetterBox(textValue: 'c')
-                  //   ],
-                  //   mainAxisAlignment: MainAxisAlignment.center,),
-                  //   children: [
-                  //   for( var i = 0 ; i < numberOfLetters; i++ )
-                  //     Row(
-                  //     children: [
-                  //       for( var j = 0 ; j < numberOfLetters; j++ )
-                  //         LetterBox(textValue: 'c')
-                  //     ],
-                  //     mainAxisAlignment: MainAxisAlignment.center,),
-                  // ],
-                  ))
-
-          // CustomKeyboard(
-          //   onTextInput: (x) {
-          //     _insertText(x);
-          //   },
-          //   onBackspace: () {
-          //     _backspace();
-          //   },
-          // ),
+                  */
+                  )),
+          Spacer(),
+          CustomKeyboard(
+            onTextInput: (x) {
+              print(x);
+              print(ObjectKey(list.elementAt(2).children.elementAt(1).key));
+              // _insertText(x);
+            },
+            onBackspace: () {
+              _backspace();
+            },
+          ),
         ],
       ),
     );

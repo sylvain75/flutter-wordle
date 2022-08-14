@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'text_key.dart';
 // import 'back_space_key.dart';
 
@@ -6,30 +7,31 @@ class CustomKeyboard extends StatelessWidget {
   CustomKeyboard({
     Key? key,
     required this.onTextInput,
-    // required this.onBackspace,
+    required this.onBackspace,
   }) : super(key: key) {
     // TODO: implement
-    throw UnimplementedError();
+    // throw UnimplementedError();
   }
   final ValueSetter<String> onTextInput;
-  // final VoidCallback onBackspace;
+  final VoidCallback onBackspace;
   void _textInputHandler(String text) => onTextInput.call(text);
-  // void _backspaceHandler() => onBackspace?.call();
+  void _backspaceHandler() => onBackspace?.call();
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 160,
       color: Colors.blue,
-      child: Column(        // <-- Column
+      child: Column(
+        // <-- Column
         children: [
-          Container(child: Text('Future keyboard'))
-          // buildRowOne(),    // <-- Row
-          // buildRowTwo(),    // <-- Row
-          // buildRowThree(),  // <-- Row
+          buildRowOne(), // <-- Row
+          // buildRowTwo(), // <-- Row
+          // buildRowThree(), // <-- Row
         ],
       ),
     );
   }
+
   Expanded buildRowOne() {
     return Expanded(
       child: Row(
