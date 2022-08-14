@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../components/keyboard.dart';
 
-class KeyboardDemo extends StatefulWidget {
+class Wordle extends StatefulWidget {
   @override
-  _KeyboardDemoState createState() => _KeyboardDemoState();
+  _WordleState createState() => _WordleState();
 }
 
-class _KeyboardDemoState extends State<KeyboardDemo> {
+class _WordleState extends State<Wordle> {
   TextEditingController _controller = TextEditingController();
   bool _readOnly = true;
   static int numberOfLetters = 5;
