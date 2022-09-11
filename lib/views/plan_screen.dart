@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/data_layer.dart';
 
 class PlanScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class _PlanScreenState extends State<PlanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Master Plan')),
+      appBar: AppBar(title: Text('Mastrrrer Plan')),
       body: _buildList(),
       floatingActionButton: _buildAddTaskButton(),
     );
@@ -32,8 +33,7 @@ class _PlanScreenState extends State<PlanScreen> {
   Widget _buildList() {
     return ListView.builder(
       itemCount: plan.tasks.length,
-      itemBuilder: (context, index) =>
-          _buildTaskTile(plan.tasks[index]),
+      itemBuilder: (context, index) => _buildTaskTile(plan.tasks[index]),
     );
   }
 
@@ -56,4 +56,3 @@ class _PlanScreenState extends State<PlanScreen> {
     );
   }
 }
-
