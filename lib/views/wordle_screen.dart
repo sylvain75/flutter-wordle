@@ -8,11 +8,45 @@ class Wordle extends StatefulWidget {
   _WordleState createState() => _WordleState();
 }
 
+String findCursorPosition(Map<String, dynamic> gameState, int maxLength) {
+  for (int key in gameState['guesses'].keys) {
+    final item = gameState['guesses'][key];
+    if (item['validation'] == null) {
+      final wordLength = item['word'].length;
+
+      return '$key:$wordLength';
+    }
+  }
+
+  return 'end';
+}
+
+String mapLetterInState(Map<String, dynamic> gameState, String coords) {
+  final List<int> coordsList = [int.parse(coords[2]), int.parse(coords[0])];
+  if (gameState['guesses'][coordsList[0]]['word'].length >=
+      (coordsList[1] + 1)) {
+    return gameState['guesses'][coordsList[0]]['word'][coordsList[1]];
+  } else {
+    return '';
+  }
+}
+
+final Map<String, dynamic> initialGameState = {
+  'guesses': {
+    0: {'word': 'maiso', 'validation': 'vvovxx'},
+    1: {'word': 'batea', 'validation': 'vvovxx'},
+    2: {'word': 'fra'},
+    3: {'word': ''},
+    4: {'word': ''},
+  },
+};
+
 class _WordleState extends State<Wordle> {
   TextEditingController _controller = TextEditingController();
   bool _readOnly = true;
   static int numberOfLetters = 5;
   var listBoxes = List<int>.generate(numberOfLetters, (i) => i + 1);
+  static Map<String, dynamic> gameState = initialGameState;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +60,8 @@ class _WordleState extends State<Wordle> {
                 .map((columnItem) => LetterBox(
                     key: ObjectKey(
                         '${columnItem.key.toString()}:${rowItem.key.toString()}'),
-                    // '${columnItem.key.toString()}:${rowItem.key.toString()}',
-                    textValue:
-                        '${columnItem.key.toString()}:${rowItem.key.toString()}',
+                    textValue: mapLetterInState(gameState,
+                        '${columnItem.key.toString()}:${rowItem.key.toString()}'),
                     handleOnTap: (text) => print(ObjectKey(
                             '${columnItem.key.toString()}:${rowItem.key.toString()}')
                         .value)))
@@ -41,30 +74,19 @@ class _WordleState extends State<Wordle> {
       body: Column(
         children: [
           SizedBox(height: 50),
-          // TextField(
-          //   controller: _controller,
-          //   decoration: InputDecoration(
-          //     border: OutlineInputBorder(
-          //       borderRadius: BorderRadius.circular(3),
-          //     ),
-          //   ),
-          //   style: TextStyle(fontSize: 24),
-          //   autofocus: true,
-          //   showCursor: true,
-          //   readOnly: _readOnly,
-          // ),
           IconButton(
-            icon: Icon(Icons.keyboard),
+            icon: Icon(Icons.reset_tv_rounded),
             onPressed: () {
               setState(() {
                 _readOnly = !_readOnly;
+                gameState = initialGameState;
               });
+              print(gameState);
             },
           ),
           // Spacer(),
           Container(
               child: Column(children: list
-
                   /*
                       String key = values.keys.elementAt(index);
                         Coordinates will be row : column
@@ -76,10 +98,32 @@ class _WordleState extends State<Wordle> {
                   )),
           Spacer(),
           CustomKeyboard(
-            onTextInput: (x) {
-              print(x);
+            onTextInput: (letter) {
+              /*
+               Should insert the letter in gameState via findCursorPosition
+               Should disabled keyboard
+               May have to create a class for Guess/State
+              */
+              final coordsString =
+                  findCursorPosition(gameState, numberOfLetters);
+              // eg: '1:2'
+              // Assuming findCursorPosition works as intended
+              final firstLevelIndex = int.parse(coordsString[0]);
+              final secondLevelIndex = int.parse(coordsString[2]);
+              print('$firstLevelIndex $secondLevelIndex');
+              setState(() {
+                gameState['guesses'][firstLevelIndex]['word'] += letter;
+                if (gameState['guesses'][firstLevelIndex]['word']?.length ==
+                    numberOfLetters) {
+                  // Disable keyboard
+                  // Api request for validation
+                  // Update gameState validation for appropriate word
+                  gameState['guesses'][firstLevelIndex]['validation'] =
+                      'vvovxx';
+                }
+              });
+              print(gameState);
               print(ObjectKey(list.elementAt(2).children.elementAt(1).key));
-              // _insertText(x);
             },
             onBackspace: () {
               _backspace();
@@ -107,6 +151,7 @@ class _WordleState extends State<Wordle> {
   }
 
   void _backspace() {
+    // TODO implement backspace
     final text = _controller.text;
     final textSelection = _controller.selection;
     final selectionLength = textSelection.end - textSelection.start;

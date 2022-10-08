@@ -34,7 +34,7 @@ class _MyCounterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
       onPressed: state.handleCounterPressed,
       child: Text(
         "${state.counter}",

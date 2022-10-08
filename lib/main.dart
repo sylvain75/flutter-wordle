@@ -1,5 +1,5 @@
 import 'package:flurddle/components/settingsScreenNotifier.dart';
-import 'package:flurddle/views/widget_view_state_screen.dart';
+import 'package:flurddle/views/wordle_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,9 +23,10 @@ class MyApp extends StatelessWidget {
                     ? ThemeMode.dark
                     : ThemeMode.light,
                 // home: const ThemeSelectorPage(title: 'State Example'),
-                home: MyCounter(
-                  textColor: Colors.red,
-                ),
+                // home: MyCounter(
+                //   textColor: Colors.red,
+                // ),
+                home: Wordle(),
               );
             },
           );
